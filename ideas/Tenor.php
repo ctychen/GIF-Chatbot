@@ -1,3 +1,5 @@
+<?php
+
 /*Demo use of getting tagged gifs from Tenor API. Example at https://fancy.lerdorf.com/tenor/?q=fancy 
 Possible improvement: get a list of results for each query, cache them and generate file names with md5
 */
@@ -69,3 +71,5 @@ foreach($result->results as $img) {
     echo "<img src=\"{$img->media[0]->gif->url}\" width=\"{$img->media[0]->gif->dims[0]}\" height=\"{$img->media[0]->gif->dims[1]}\"/>\n";
 
 }
+               
+?>
