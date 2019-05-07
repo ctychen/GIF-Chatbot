@@ -24,17 +24,22 @@ public class Tenor {
 	
 	public static final String APIKEY = "OTIWU6LM9JVL";
 	
-	public Tenor(String APIKey, String locale, String filter ) {
+	/**
+	 * Constructs tenor object with a default API key
+	 */
+	public Tenor() {
+		
+	}
+	
+	public Tenor(String APIKey) {
 		this.APIKey = APIKey; //"H9U6TWFQY1LM"
-		this.locale = locale; //"en_US"
-		this.filter = filter; //"high"
 	}
 	
 	/**
 	 * 
 	 * Fetches JSON code
 	 * 
-	 * @param url The EXACT same URL that you'd pass in when pinging tenor api (ex: "https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8&anon_id=3a76e56901d740da9e59ffb22b988242")
+	 * @param url The EXACT same URL that you'd pass in when pinging tenor api (ex: "https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8")
 	 * @param ttl Time To Live in SECONDS, basically ignore all files older than this ttl
 	 * @return JSON resulsts of the search querry if successful, null if not
 	 */
@@ -84,8 +89,8 @@ public class Tenor {
 	}
 
 	/**
-	 * Translates the string into an md5
-	 * @param s String to be translated
+	 * Hashes the string into an md5
+	 * @param s String to be hashed
 	 * @return The md5 version of the string
 	 */
 	public String md5(String s) {
