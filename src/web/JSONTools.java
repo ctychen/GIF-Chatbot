@@ -54,6 +54,7 @@ public class JSONTools {
 	 */
 	public static String readJsonFromUrlAndPutItIntoAString(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
+		System.out.println("URL="+url);
 		try {
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 			return readAll(rd);
@@ -75,9 +76,9 @@ public class JSONTools {
 			if (s.charAt(i) == '\n')
 				k++;
 			else {
-				if (k > result.size())
+				while (k >= result.size())
 					result.add("");
-				result.set(k, result.get(i) + s.charAt(i));
+				result.set(k, result.get(k) + s.charAt(i));
 			}
 		}
 		return result;
