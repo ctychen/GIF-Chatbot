@@ -54,7 +54,8 @@ public class Tenor {
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
-			if (now.toEpochSecond(null) - ts.toMillis() / 1000 < ttl) {
+			if (now.toEpochSecond(
+					null) - ts.toMillis() / 1000 < ttl) {
 				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON
 													// with "\n" to separate lines
 			}
