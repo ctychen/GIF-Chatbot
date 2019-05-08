@@ -91,7 +91,7 @@ public class Tenor {
 	 */
 	public String search(String query) { // anon_id may be used for rating
 
-		return fetch(BASE_URL + "search?q" + query + "&key=" + APIKey + "&limit=" + resultLimit, 600); // URL should
+		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit, 600); // URL should
 	}
 
 	/**
@@ -125,6 +125,12 @@ public class Tenor {
 		catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	
+	public static void main(String args[]) {
+		Tenor yeet = new Tenor();
+		System.out.println(yeet.search("fancy"));
 	}
 
 }
