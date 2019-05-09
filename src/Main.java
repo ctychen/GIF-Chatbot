@@ -1,5 +1,7 @@
 import ui.*;
 import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import javax.swing.JFrame;
 import processing.awt.PSurfaceAWT;
 import processing.core.PApplet;
@@ -22,6 +24,9 @@ public class Main {
 		window2.setResizable(true);
 
 		window2.setVisible(true);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		window2.setLocation(screenSize.width/2-window2.getSize().width/2, screenSize.height/2-window2.getSize().height/2-window.getSize().height);
 
 	}
 

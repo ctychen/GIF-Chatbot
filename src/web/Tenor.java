@@ -86,14 +86,28 @@ public class Tenor {
 	 * Returns a JSON as a result of a query
 	 * 
 	 * @param query A simple term, such as "fancy"
-	 * @return JSON result of the query. For example:
-	 *         https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
+	 * @return JSON result of the query.
+	 *         
 	 */
 	public String search(String query) { // anon_id may be used for rating
 
-		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit, 600); // URL should
+		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit, 600); // URL should be https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
 	}
 
+	/**
+	 * Given a json, finds a random gif url and returns it
+	 * @param json THe JSON to find a URL in
+	 * @return A URL to a random gif present in the inputted JSON
+	 */
+	public String getGIFURL(String json) {
+		String result = null;
+		int fancyIndex = -1;
+		while (fancyIndex == -1)
+			fancyIndex = (json.indexOf("\"gif\":", (int)(Math.random()*json.length())));
+		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1));
+		return result;
+	}
+	
 	/**
 	 * Hashes the string into an md5
 	 * 
