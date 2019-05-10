@@ -35,8 +35,10 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 10) { // Checks for 'return' key pressed
 			String input = userText.getText().replaceAll(" ", "_");
-			GIFDisplay.memeURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic
-																								// happens
+			if (input.equalsIgnoreCase("get_url")) {
+				userText.setText(GIFDisplay.getURL());
+			} else
+				GIFDisplay.memeURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
 		}
 	}
 

@@ -9,7 +9,7 @@ import processing.core.*;
  */
 public class GIFDisplay extends PApplet {
 
-	private Meme fancyMeme = null; 
+	private static Meme fancyMeme = null; 
 	public static String memeURL = null;
 	
 	public GIFDisplay() {
@@ -29,5 +29,9 @@ public class GIFDisplay extends PApplet {
 		if (fancyMeme != null) {
 			fancyMeme.draw(this);
 		}
+	}
+	
+	public static String getURL() {
+		return fancyMeme.getURL();
 	}
 }

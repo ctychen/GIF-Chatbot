@@ -10,6 +10,7 @@ import java.nio.file.attribute.FileTime;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -22,7 +23,7 @@ import org.json.JSONException;
 public class Tenor {
 
 	final String BASE_URL = "https://api.tenor.com/v1/";
-	final int resultLimit = 8;
+	final int resultLimit = 10;
 	private String APIKey;
 	private String locale = "en_US";
 	private String filter = "high";
@@ -59,10 +60,8 @@ public class Tenor {
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
-			if (now.toEpochSecond(
-					null) - ts.toMillis() / 1000 < ttl) {
-				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON
-													// with "\n" to separate lines
+			if (now.toEpochSecond(ZoneOffset.UTC) - ts.toMillis() / 1000 < ttl) {
+				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON with "\n" to separate lines
 			}
 		} catch (IOException e) {
 		}
@@ -146,10 +145,10 @@ public class Tenor {
 		}
 	}
 	
-	
+	/*
 	public static void main(String args[]) {
 		Tenor yeet = new Tenor();
 		System.out.println(yeet.search("fancy"));
-	}
+	}*/
 
 }

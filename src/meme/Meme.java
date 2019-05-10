@@ -11,12 +11,14 @@ import processing.core.*;
 public class Meme {
 
 	private Gif gif;
+	private String url;
 
 	public Meme() {
 
 	}
 
 	public Meme(String filename, PApplet p) {
+		url = filename;
 		try {
 			gif = new Gif(p, filename);
 		} catch(NullPointerException e) {
@@ -33,6 +35,10 @@ public class Meme {
 
 	public Gif getGIF() {
 		return this.gif;
+	}
+	
+	public String getURL() {
+		return url;
 	}
 
 }
