@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import web.Tenor;
 
 public class ChatWindow extends JFrame implements ActionListener, KeyListener {
-	private JTextField userText;
+	private static JTextField userText;
 	private Tenor fancyTenor;
 
 	public ChatWindow() {
@@ -27,39 +27,32 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		fancyTenor = new Tenor();
 	}
 
-	public void setup() {
-	}
-
-	public void draw() {
-
-	}
-	
 	public void keyPressed(KeyEvent e) {
-        if(e.getKeyCode() == 10) { //Checks for 'return' key pressed
-        	GIFDisplay.memeURL = fancyTenor.getGIFURL(fancyTenor.search(userText.getText())); //This is where the magic happens
-        }
-    }
+		if (e.getKeyCode() == 10) { // Checks for 'return' key pressed
+			GIFDisplay.memeURL = fancyTenor.getGIFURL(fancyTenor.search(userText.getText())); // This is where the magic
+																								// happens
+		}
+	}
 
-	public String getUserInput() {
+	public static String getUserInput() {
 		return userText.getText();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -11,7 +11,7 @@ public class Meme {
 
 	}
 
-	public Meme(String filename, PAppletre	 p) {
+	public Meme(String filename, PApplet	 p) {
 		gif = new Gif(p, filename);
 		gif.play();
 	}
