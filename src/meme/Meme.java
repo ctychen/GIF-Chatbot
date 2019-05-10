@@ -12,7 +12,12 @@ public class Meme {
 	}
 
 	public Meme(String filename, PApplet p) {
-		gif = new Gif(p, filename);
+		try {
+			gif = new Gif(p, filename);
+		} catch(NullPointerException e) {
+			System.out.println("Null pointer exception at: " + filename);
+			System.out.println(e);
+		}
 		gif.play();
 	}
 
