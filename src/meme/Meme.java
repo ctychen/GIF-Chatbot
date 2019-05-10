@@ -11,14 +11,18 @@ public class Meme {
 
 	}
 
-	public Meme(String filename, PApplet	 p) {
+	public Meme(String filename, PApplet p) {
 		gif = new Gif(p, filename);
 		gif.play();
 	}
-	
+
 	public void draw(PApplet g) {
-		//System.out.println("Drawing GIF");
-		g.image(gif, 0, 0);
+		// System.out.println("Drawing GIF");
+		g.image(gif, 0, 0, g.width, g.height);
+	}
+
+	public Gif getGIF() {
+		return this.gif;
 	}
 
 }
