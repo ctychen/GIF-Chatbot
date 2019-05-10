@@ -104,7 +104,7 @@ public class Tenor {
 		int fancyIndex = -1;
 		while (fancyIndex == -1)
 			fancyIndex = (json.indexOf("\"gif\":", (int)(Math.random()*json.length())));
-		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1));
+		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
 		return result;
 	}
 	

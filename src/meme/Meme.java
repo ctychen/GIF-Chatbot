@@ -17,7 +17,7 @@ public class Meme {
 	}
 	
 	public void draw(PApplet g) {
-		System.out.println("Drawing GIF");
+		//System.out.println("Drawing GIF");
 		g.image(gif, 0, 0);
 	}
 
