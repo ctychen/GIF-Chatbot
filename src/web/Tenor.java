@@ -14,6 +14,11 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+/**
+ * Fetches GIFs matching a certain keyword using the Tenor API
+ * @author claire, carl 
+ *
+ */
 public class Tenor {
 
 	final String BASE_URL = "https://api.tenor.com/v1/";
@@ -32,10 +37,10 @@ public class Tenor {
 	/**
 	 * Constructs tenor object with your own Tenor API
 	 * 
-	 * @param APIKey
+	 * @param APIKey Your Tenor API Key
 	 */
 	public Tenor(String APIKey) {
-		this.APIKey = APIKey; // "H9U6TWFQY1LM"
+		this.APIKey = APIKey; 
 	}
 
 	/**

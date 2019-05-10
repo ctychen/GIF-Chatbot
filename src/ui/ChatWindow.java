@@ -7,6 +7,11 @@ import javax.swing.JLabel;
 
 import web.Tenor;
 
+/**
+ * Represents a window for user text input and handles getting input
+ * @author claire, carl
+ *
+ */
 public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	private static JTextField userText;
 	private Tenor fancyTenor;

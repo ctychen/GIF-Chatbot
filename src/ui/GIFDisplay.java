@@ -2,6 +2,11 @@ package ui;
 import meme.Meme;
 import processing.core.*;
 
+/**
+ * Represents a panel which displays an animated GIF 
+ * @author  claire
+ *
+ */
 public class GIFDisplay extends PApplet {
 
 	private Meme fancyMeme = null; 

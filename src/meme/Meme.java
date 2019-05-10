@@ -3,6 +3,11 @@ package meme;
 import gifAnimation.*;
 import processing.core.*;
 
+/**
+ * Represents a meme object, which has a GIF image and properties for analysing it
+ * @author claire
+ *
+ */
 public class Meme {
 
 	private Gif gif;

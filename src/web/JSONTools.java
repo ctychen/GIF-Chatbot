@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Utility class for working with JSON files
+ * @author carl
+ *
+ */
 public class JSONTools {
 
 	private static String readAll(Reader rd) throws IOException {
@@ -25,7 +30,7 @@ public class JSONTools {
 	}
 
 	/**
-	 * Reads JSON from a ULR
+	 * Reads JSON from a URL
 	 * 
 	 * @param url Its just a URL, very simple
 	 * @return A JSON object as a result from that URL
