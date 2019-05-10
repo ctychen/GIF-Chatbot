@@ -37,6 +37,8 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			String input = userText.getText().replaceAll(" ", "_");
 			if (input.equalsIgnoreCase("get_url")) {
 				userText.setText(GIFDisplay.getURL());
+			} else if (input.equalsIgnoreCase("refresh")) {
+				GIFDisplay.memeURL = GIFDisplay.getURL();
 			} else
 				GIFDisplay.memeURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
 		}
