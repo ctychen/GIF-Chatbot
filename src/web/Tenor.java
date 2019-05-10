@@ -1,8 +1,12 @@
 package web;
 
 import java.awt.List;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigInteger;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -109,6 +113,45 @@ public class Tenor {
 		while (fancyIndex == -1)
 			fancyIndex = (json.indexOf("\"gif\":", (int)(Math.random()*json.length())));
 		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
+		return result;
+	}
+	
+	/**
+	 * INCOMPLETE: Given a URL, returns a filename for a GIF stored locally, if no such GIF exists, it downloads it from the URL and creates it under a filename equal to the md5 of the url
+	 * @param url The url of the image
+	 * @return A  filename for a local image
+	 */
+	public String getGIFFromLocal(String url)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
+		String result = null;
+		InputStream is = null;
+		OutputStream os = null;
+		try {
+			URL fancyUrl = new URL(url);
+			String fileName = fancyUrl.getFile();
+			String destName = "./figures" + fileName.substring(fileName.lastIndexOf("/"));
+			System.out.println(destName);
+		 
+			is = fancyUrl.openStream();
+			os = new FileOutputStream(destName);
+		 
+			byte[] b = new byte[2048];
+			int length;
+		 
+			while ((length = is.read(b)) != -1) {
+				os.write(b, 0, length);
+			}
+		} catch(IOException e) {
+			System.out.println("Error downloading file from URL: " + url);
+		} finally {
+			try {
+				is.close();
+				os.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error closing InputStream or OutputStream");
+				e.printStackTrace();
+			}
+		}
 		return result;
 	}
 	
