@@ -1,6 +1,8 @@
 package web;
 
 import java.awt.List;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -117,22 +119,33 @@ public class Tenor {
 	}
 	
 	/**
-	 * INCOMPLETE: Given a URL, returns a filename for a GIF stored locally, if no such GIF exists, it downloads it from the URL and creates it under a filename equal to the md5 of the url
+	 * Given a URL, returns a filename for a GIF stored locally, if no such GIF exists, it downloads it from the URL and creates it under a filename equal to the md5 of the url
 	 * @param url The url of the image
 	 * @return A  filename for a local image
 	 */
-	public String getGIFFromLocal(String url)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
+	public String getGIFFromLocal(String url, int ttl)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
 		String result = null;
+		
+		String filename = "images" + MindReader.fileSep + md5(url) + ".gif";
+		FileTime ts;
+		try {
+			ts = Files.getLastModifiedTime(Paths.get(filename));
+			LocalDateTime now = LocalDateTime.now();
+			if (now.toEpochSecond(ZoneOffset.UTC) - ts.toMillis() / 1000 < ttl) {
+				return filename; 
+			}
+		} catch (IOException e) {
+		}
+		
 		InputStream is = null;
 		OutputStream os = null;
 		try {
 			URL fancyUrl = new URL(url);
-			String fileName = fancyUrl.getFile();
-			String destName = "./figures" + fileName.substring(fileName.lastIndexOf("/"));
-			System.out.println(destName);
+			String destName = "images" + MindReader.fileSep + md5(url) + ".gif";
+			System.out.println("Creating file: " + destName);
 		 
-			is = fancyUrl.openStream();
-			os = new FileOutputStream(destName);
+			is = new BufferedInputStream(fancyUrl.openStream());
+			os = new BufferedOutputStream(new FileOutputStream(destName));
 		 
 			byte[] b = new byte[2048];
 			int length;
@@ -140,8 +153,10 @@ public class Tenor {
 			while ((length = is.read(b)) != -1) {
 				os.write(b, 0, length);
 			}
+			result = destName;
 		} catch(IOException e) {
 			System.out.println("Error downloading file from URL: " + url);
+			System.out.println(e);
 		} finally {
 			try {
 				is.close();
@@ -188,10 +203,11 @@ public class Tenor {
 		}
 	}
 	
-	/*
+	
 	public static void main(String args[]) {
 		Tenor yeet = new Tenor();
-		System.out.println(yeet.search("fancy"));
-	}*/
+		//System.out.println(yeet.search("fancy"));
+		System.out.println(yeet.getGIFFromLocal(yeet.getGIFURL(yeet.search("fancy")), 600));
+	}
 
 }
