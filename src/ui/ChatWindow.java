@@ -39,8 +39,11 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				userText.setText(GIFDisplay.getURL());
 			} else if (input.equalsIgnoreCase("refresh")) {
 				GIFDisplay.memeURL = GIFDisplay.getURL();
-			} else
-				GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(fancyTenor.getGIFURL(fancyTenor.search(input)), 600); // This is where the magic happens
+			} else {
+				GIFDisplay.memeWebURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
+				GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(GIFDisplay.memeWebURL, 600); // Magic also happens here as well
+				
+			}
 		}
 	}
 

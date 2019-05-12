@@ -12,6 +12,7 @@ public class Meme {
 
 	private Gif gif;
 	private String url;
+	private String weburl;
 
 	public Meme() {
 
@@ -38,7 +39,11 @@ public class Meme {
 	}
 	
 	public String getURL() {
-		return url;
+		return weburl;
+	}
+	
+	public void setWebURL(String s) {
+		weburl = s;
 	}
 
 }

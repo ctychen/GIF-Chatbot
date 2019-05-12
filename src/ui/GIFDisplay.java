@@ -11,6 +11,7 @@ public class GIFDisplay extends PApplet {
 
 	private static Meme fancyMeme = null; 
 	public static String memeURL = null;
+	public static String memeWebURL = null;
 	
 	public GIFDisplay() {
 		
@@ -24,6 +25,7 @@ public class GIFDisplay extends PApplet {
 		background(255);
 		if (memeURL != null) {
 			fancyMeme = new Meme(memeURL, this);
+			fancyMeme.setWebURL(memeWebURL);
 			memeURL = null;
 		}
 		if (fancyMeme != null) {
