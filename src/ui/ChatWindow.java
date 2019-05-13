@@ -47,7 +47,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			} else {
 				GIFDisplay.memeWebURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
 				GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(GIFDisplay.memeWebURL, 600); // Magic also happens here as well
-				
+				GIFDisplay.shelbyIndex = 2;
 			}
 		}
 		else if (e.getKeyCode() == 47) {
@@ -103,9 +103,17 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
+		} else if (input.equalsIgnoreCase("hide_shelby")) {
+			GIFDisplay.shelbyIndex = -1;
+			changeButtons();
+			pane = new JOptionPane("Successfully hid Shelby (he will be back)");
+			d = pane.createDialog(null, "Why did you do that?");
+			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+			d.setVisible(true);
 		}
 		userText.setText("");
-		GIFDisplay.shelbyIndex = 0;
+		if (GIFDisplay.shelbyIndex != -1)
+			GIFDisplay.shelbyIndex = 0;
 	}
 
 	public static String getUserInput() {

@@ -27,8 +27,14 @@ public class GIFDisplay extends PApplet {
 	
 	public void draw() {
 		background(255);
-		image(shelbys[shelbyIndex], 0, 0, width, height);
-		if (shelbyIndex != 1) {
+		if (shelbyIndex != -1)
+			image(shelbys[shelbyIndex], 0, 0, width, height);
+		if (shelbyIndex == 1) {
+			textSize(32);
+			fill((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
+			text("Command Mode", 70+(int)(Math.random()*10), height-30-(int)(Math.random()*10));
+		}
+		if (shelbyIndex != 1 && shelbyIndex != 0) {
 			if (memeURL != null) {
 				fancyMeme = new Meme(memeURL, this);
 				fancyMeme.setWebURL(memeWebURL);
