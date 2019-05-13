@@ -32,7 +32,7 @@ public class Tenor {
 	final int resultLimit = 10;
 	private String APIKey;
 	private String locale = "en_US";
-	private String filter = "high";
+	private String filter = "medium"; // G + PG
 
 	/**
 	 * Constructs tenor object with the default Tenor API key
@@ -101,7 +101,7 @@ public class Tenor {
 	 */
 	public String search(String query) { // anon_id may be used for rating
 
-		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit, 600); // URL should be https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
+		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit + "&contentfilter="+filter, 600); // URL should be https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
 	}
 
 	/**
