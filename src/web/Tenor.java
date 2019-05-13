@@ -61,13 +61,17 @@ public class Tenor {
 	 * @return JSON results of the search query if successful, null if not
 	 */
 	public String fetch(String url, int ttl) {
+		//ttl = 0;
 		String filename = "tenorJSON" + MindReader.fileSep + md5(url);
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
-			if (now.toEpochSecond(ZoneOffset.UTC) - ts.toMillis() / 1000 < ttl) {
+			if (now.toEpochSecond(ZoneOffset.UTC) + 25200 - ts.toMillis() / 1000 < ttl) {
+				//System.out.println("Found JSON in cache " + now.toEpochSecond(ZoneOffset.UTC) + " " + (ts.toMillis() / 1000));
 				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON with "\n" to separate lines
+			} else {
+				MindReader.erase(filename); //Deletes the file if it is too old
 			}
 		} catch (IOException e) {
 		}
@@ -125,14 +129,16 @@ public class Tenor {
 	 */
 	public String getGIFFromLocal(String url, int ttl)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
 		String result = null;
-		
+		//ttl = 0;
 		String filename = "images" + MindReader.fileSep + md5(url) + ".gif";
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
-			if (now.toEpochSecond(ZoneOffset.UTC) - ts.toMillis() / 1000 < ttl) {
+			if (now.toEpochSecond(ZoneOffset.UTC) + 25200 - ts.toMillis() / 1000 < ttl) {
 				return filename; 
+			} else {
+				MindReader.erase(filename); //Deletes image if too old
 			}
 		} catch (IOException e) {
 		}
