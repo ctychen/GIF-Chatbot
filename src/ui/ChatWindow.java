@@ -139,9 +139,31 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			d = pane.createDialog(null, "Toggled Scaling");
 			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 			d.setVisible(true);
+		} else if (input.equalsIgnoreCase("result_limit") || input.equalsIgnoreCase("limit")) {
+			try {
+				changeButtons();
+				pane = new JOptionPane("Set the result limit (Default is 10)");
+				d = pane.createDialog(null, "Set Result Limit");
+				pane.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				input = JOptionPane.showInputDialog(pane);
+				int limit = Integer.parseInt(input);
+				fancyTenor.setResultLimit(limit);
+				changeButtons();
+				pane = new JOptionPane("Successfully set the result limit to " + limit);
+				d = pane.createDialog(null, "Success");
+				d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				d.setVisible(true);
+			} catch(NumberFormatException e) {
+				changeButtons();
+				System.out.println("Result limit must be an integer");
+				pane = new JOptionPane("Result limit must be an integer");
+				d = pane.createDialog(null, "REEEEEE");
+				d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				d.setVisible(true);
+			}
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
-			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/help");
+			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/result limit\n/help");
 			d = pane.createDialog(null, "Help Menu");
 			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 			d.setVisible(true);

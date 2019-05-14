@@ -28,8 +28,8 @@ import org.json.JSONException;
  */
 public class Tenor {
 
-	final String BASE_URL = "https://api.tenor.com/v1/";
-	final int resultLimit = 10;
+	private final String BASE_URL = "https://api.tenor.com/v1/";
+	private int resultLimit = 10;
 	private String APIKey;
 	private String locale = "en_US";
 	private String filter = "medium"; // G + PG
@@ -58,6 +58,10 @@ public class Tenor {
 	 */
 	public void setRes(int res) {
 		this.res = res%4;
+	}
+	
+	public void setResultLimit(int resultLimit) {
+		this.resultLimit = resultLimit;
 	}
 	
 	/**
