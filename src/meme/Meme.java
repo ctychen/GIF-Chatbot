@@ -2,6 +2,7 @@ package meme;
 
 import gifAnimation.*;
 import processing.core.*;
+import ui.GIFDisplay;
 
 /**
  * Represents a meme object, which has a GIF image and properties for analysing it
@@ -31,7 +32,10 @@ public class Meme {
 
 	public void draw(PApplet g) {
 		// System.out.println("Drawing GIF");
-		g.image(gif, 0, 0, g.width, g.height);
+		if (GIFDisplay.scaling)
+			g.image(gif, 0, 0, g.width, g.height);
+		else
+			g.image(gif, 0, 0);
 	}
 
 	public Gif getGIF() {

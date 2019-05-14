@@ -110,6 +110,41 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			d = pane.createDialog(null, "Why did you do that?");
 			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 			d.setVisible(true);
+		} else if (input.equalsIgnoreCase("resolution") || input.equalsIgnoreCase("res")) {
+			try {
+				changeButtons();
+				pane = new JOptionPane("Pick a number between 0 and 3 inclusive. 0 is nano, 1 is small, 2 is default, and 3 is full. \nWarning: Full resolution causes certain GIFs to not fully load");
+				d = pane.createDialog(null, "Set Resolution");
+				pane.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				input = JOptionPane.showInputDialog(pane);
+				int res = Integer.parseInt(input);
+				fancyTenor.setRes(res);
+				changeButtons();
+				pane = new JOptionPane("Successfully set the resolution to " + fancyTenor.getRes());
+				d = pane.createDialog(null, "Success");
+				d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				d.setVisible(true);
+			} catch(NumberFormatException e) {
+				changeButtons();
+				System.out.println("Resolution must be an integer");
+				pane = new JOptionPane("Resolution must be an integer");
+				d = pane.createDialog(null, "REEEEEE");
+				d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+				d.setVisible(true);
+			}
+		} else if (input.equalsIgnoreCase("toggle_scaling") || input.equalsIgnoreCase("scale")) {
+			GIFDisplay.scaling = !GIFDisplay.scaling;
+			changeButtons();
+			pane = new JOptionPane("Scaling set to " + GIFDisplay.scaling);
+			d = pane.createDialog(null, "Toggled Scaling");
+			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+			d.setVisible(true);
+		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
+			changeButtons();
+			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/help");
+			d = pane.createDialog(null, "Help Menu");
+			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+			d.setVisible(true);
 		}
 		userText.setText("");
 		if (GIFDisplay.shelbyIndex != -1)

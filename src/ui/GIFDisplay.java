@@ -15,6 +15,7 @@ public class GIFDisplay extends PApplet {
 	public static String memeWebURL = null;
 	private PImage[] shelbys = new PImage[3];
 	public static int shelbyIndex = 2;
+	public static boolean scaling = true;
 	
 	public GIFDisplay() {
 		

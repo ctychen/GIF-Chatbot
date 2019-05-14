@@ -33,6 +33,8 @@ public class Tenor {
 	private String APIKey;
 	private String locale = "en_US";
 	private String filter = "medium"; // G + PG
+	private final String[] resolutions = {"nanogif", "tinygif", "mediumgif", "gif"};
+	private int res = 2;
 
 	/**
 	 * Constructs tenor object with the default Tenor API key
@@ -48,6 +50,22 @@ public class Tenor {
 	 */
 	public Tenor(String APIKey) {
 		this.APIKey = APIKey; 
+	}
+	
+	/**
+	 * 
+	 * @param res The new resolution (0-nanogif, 1-tinygif, 2-mediumgif, 3-gif)
+	 */
+	public void setRes(int res) {
+		this.res = res%4;
+	}
+	
+	/**
+	 * 
+	 * @return Returns the current resolution as a string (Ex: nanogif)
+	 */
+	public String getRes() {
+		return resolutions[res];
 	}
 
 	/**
@@ -117,7 +135,7 @@ public class Tenor {
 		String result = null;
 		int fancyIndex = -1;
 		while (fancyIndex == -1)
-			fancyIndex = (json.indexOf("\"tinygif\":", (int)(Math.random()*json.length())));
+			fancyIndex = (json.indexOf("\"" + resolutions[res] + "\":", (int)(Math.random()*json.length())));
 		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
 		return result;
 	}
