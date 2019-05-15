@@ -181,7 +181,7 @@ public class Tenor {
 		} 
 		try {
 			URL fancyUrl = new URL(url);
-			String destName = System.getProperty("user.dir") + "images" + MindReader.fileSep + md5(url) + ".gif";
+			String destName = System.getProperty("user.dir") + MindReader.fileSep + "images" + MindReader.fileSep + md5(url) + ".gif";
 			System.out.println("Creating file: " + destName);
 		 
 			is = new BufferedInputStream(fancyUrl.openStream());
