@@ -5,5 +5,7 @@
 	<classpathentry exported="true" kind="lib" path="org.json.jar"/>
 	<classpathentry kind="lib" path="core.jar"/>
 	<classpathentry kind="lib" path="gifAnimation.jar"/>
+	<classpathentry kind="lib" path="common-lang3.jar"/>
+	<classpathentry kind="lib" path="commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

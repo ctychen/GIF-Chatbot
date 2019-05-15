@@ -28,7 +28,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 2));
 
-		panel.add(new JLabel("Chat here!"));
+		panel.add(new JLabel("Chat here, or type /help for commands"));
 		userText = new JTextField(3);
 		userText.setHorizontalAlignment(JTextField.RIGHT);
 		userText.addKeyListener(this);

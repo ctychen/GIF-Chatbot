@@ -3,6 +3,7 @@ package web;
 import java.awt.List;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -152,7 +153,7 @@ public class Tenor {
 	public String getGIFFromLocal(String url, int ttl)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
 		String result = null;
 		//ttl = 0;
-		String filename = "images" + MindReader.fileSep + md5(url) + ".gif";
+		String filename = System.getProperty("user.dir") + MindReader.fileSep  + "images" + MindReader.fileSep + md5(url) + ".gif";
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
@@ -167,9 +168,20 @@ public class Tenor {
 		
 		InputStream is = null;
 		OutputStream os = null;
+		
+		File f = new File(System.getProperty("user.dir") + MindReader.fileSep  + "images");
+		try{
+		    if(f.mkdir()) { 
+		        System.out.println("Directory Created");
+		    } else {
+		        System.out.println("Directory is not created");
+		    }
+		} catch(Exception e){
+		    e.printStackTrace();
+		} 
 		try {
 			URL fancyUrl = new URL(url);
-			String destName = "images" + MindReader.fileSep + md5(url) + ".gif";
+			String destName = System.getProperty("user.dir") + "images" + MindReader.fileSep + md5(url) + ".gif";
 			System.out.println("Creating file: " + destName);
 		 
 			is = new BufferedInputStream(fancyUrl.openStream());
