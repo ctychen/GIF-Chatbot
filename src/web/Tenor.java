@@ -145,14 +145,18 @@ public class Tenor {
 	/**
 	 * Given a json, finds a random gif url and returns it
 	 * @param json THe JSON to find a URL in
-	 * @return A URL to a random gif present in the inputted JSON
+	 * @return A URL to a random gif present in the inputted JSON, if it can't find one then it returns null
 	 */
 	public String getGIFURL(String json) {
 		String result = null;
+		int count = 0;
 		int fancyIndex = -1;
-		while (fancyIndex == -1)
+		while (fancyIndex == -1 && count < 60) {
 			fancyIndex = (json.indexOf("\"" + resolutions[res] + "\":", (int)(Math.random()*json.length())));
-		result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
+			count++;
+		}
+		if (fancyIndex != -1)
+			result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
 		return result;
 	}
 	

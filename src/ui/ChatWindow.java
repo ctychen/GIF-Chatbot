@@ -45,9 +45,19 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			if (input.contains("/")) {
 				checkCommands(input.substring(1));
 			} else {
-				GIFDisplay.memeWebURL = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
-				GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(GIFDisplay.memeWebURL, 600); // Magic also happens here as well
-				GIFDisplay.shelbyIndex = 2;
+				String temp = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
+				if (temp != null) {
+					GIFDisplay.memeWebURL = temp;
+					GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(GIFDisplay.memeWebURL, 600); // Magic also happens here as well
+					GIFDisplay.shelbyIndex = 2;
+				}
+				else {
+					changeButtons();
+					pane = new JOptionPane("No results");
+					d = pane.createDialog(null, "Uh Oh");
+					d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
+					d.setVisible(true);
+				}
 			}
 		}
 		else if (e.getKeyCode() == 47) {
