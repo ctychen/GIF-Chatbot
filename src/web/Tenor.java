@@ -84,8 +84,19 @@ public class Tenor {
 	 * @return JSON results of the search query if successful, null if not
 	 */
 	public String fetch(String url, int ttl) {
+		File f = new File(System.getProperty("user.dir") + MindReader.fileSep  + "tenorJSON");
+		try{
+		    if(f.mkdir()) { 
+		        System.out.println("Directory Created");
+		    } else {
+		        System.out.println("Directory is not created");
+		    }
+		} catch(Exception e){
+		    e.printStackTrace();
+		} 
+		
 		//ttl = 0;
-		String filename = "tenorJSON" + MindReader.fileSep + md5(url);
+		String filename = System.getProperty("user.dir") + MindReader.fileSep + "tenorJSON" + MindReader.fileSep + md5(url) + ".JSON";
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
