@@ -8,8 +8,15 @@ import java.io.IOException;
 
 import javax.swing.*;
 
+import org.json.JSONException;
+
+import web.JSONTools;
 import web.MindReader;
 import web.Tenor;
+
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Represents a window for user text input and handles getting input
@@ -171,9 +178,17 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 				d.setVisible(true);
 			}
+		} else if (input.substring(0, 4).equalsIgnoreCase("play")) {
+			input = input.substring(input.indexOf("_")+1);
+			try {
+				openURL(JSONTools.getVideoLink(JSONTools.readJsonFromUrlAndPutItIntoAString("https://www.youtube.com/results?search_query=" + input)));
+			} catch (IOException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
-			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/result limit\n/help");
+			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/result limit\n/play\n/help");
 			d = pane.createDialog(null, "Help Menu");
 			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 			d.setVisible(true);
@@ -181,6 +196,18 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		userText.setText("");
 		if (GIFDisplay.shelbyIndex != -1)
 			GIFDisplay.shelbyIndex = 0;
+	}
+	
+	public void openURL(String URL) {
+		System.out.println("Attempting to open " + URL);
+		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+		    try {
+				Desktop.getDesktop().browse(new URI(URL));
+			} catch (IOException | URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static String getUserInput() {

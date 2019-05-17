@@ -1,6 +1,9 @@
 package web;
 
 import java.awt.List;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,6 +15,8 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import ui.GIFDisplay;
 
 /**
  * Utility class for working with JSON files
@@ -87,5 +92,19 @@ public class JSONTools {
 			}
 		}
 		return result;
+	}
+	
+	public static String getVideoLink(String JSON) {
+		String result = null;
+		//System.out.println(JSON);
+		//StringSelection stringSelection = new StringSelection(JSON);
+		//Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		//clipboard.setContents(stringSelection, null);
+		int fancyIndex = JSON.indexOf("data-context-item-id=")+22;
+		result = JSON.substring(fancyIndex, JSON.indexOf("\"", fancyIndex));
+		//result = JSON.substring(JSON.indexOf("=\"") + 2);
+		//result = result.substring(0, result.indexOf("\"", 3));	
+		
+		return "https://www.youtube.com/watch?v=" + result;
 	}
 }
