@@ -20,8 +20,6 @@ import ui.GIFDisplay;
 
 /**
  * Utility class for working with JSON files
- * @author carl
- *
  */
 public class JSONTools {
 
@@ -94,6 +92,10 @@ public class JSONTools {
 		return result;
 	}
 	
+	/**
+	 * @param JSON 
+	 * @return YouTube video search result as link
+	 */
 	public static String getVideoLink(String JSON) {
 		String result = null;
 		//System.out.println(JSON);

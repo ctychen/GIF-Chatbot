@@ -35,7 +35,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 2));
 
-		panel.add(new JLabel("Chat here, or type /help for commands"));
+		panel.add(new JLabel("Chat here, or type /help to see the list of commands"));
 		userText = new JTextField(3);
 		userText.setHorizontalAlignment(JTextField.RIGHT);
 		userText.addKeyListener(this);
@@ -46,9 +46,14 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		fancyTenor = new Tenor();
 	}
 
+	/**
+	 * If the user presses "enter", the input will get parsed
+	 */
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 10) { // Checks for 'return' key pressed
 			String input = userText.getText().replaceAll(" ", "_");
+			if (input.equalsIgnoreCase("osman")) input = "thumb";
+			if (input.equalsIgnoreCase("carl")) input = "fancy";
 			if (input.contains("/")) {
 				checkCommands(input.substring(1));
 			} else {
@@ -188,7 +193,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			}
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
-			pane = new JOptionPane("Available Commands:\n/get url\n/refresh\n/trash\n/hide shelby\n/resolution\n/toggle scaling\n/result limit\n/play\n/help");
+			pane = new JOptionPane("Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/result limit: set result queue size\n/play (+ songname)\n/help");
 			d = pane.createDialog(null, "Help Menu");
 			d.setLocation((int)(Math.random()*1200),(int)(Math.random()*600));
 			d.setVisible(true);
@@ -198,6 +203,10 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			GIFDisplay.shelbyIndex = 0;
 	}
 	
+	/**
+	 * Opens a given URL in the default browser
+	 * @param URL
+	 */
 	public void openURL(String URL) {
 		System.out.println("Attempting to open " + URL);
 		if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
