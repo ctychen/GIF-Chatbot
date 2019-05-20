@@ -54,6 +54,14 @@ public class Tenor {
 	}
 	
 	/**
+	 * Sets content filter from user input
+	 * @param filter
+	 */
+	public void setFilter(String filter) {
+		this.filter = filter;
+	}
+	
+	/**
 	 * 
 	 * @param res The new resolution (0-nanogif, 1-tinygif, 2-mediumgif, 3-gif)
 	 */
