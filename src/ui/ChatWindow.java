@@ -191,6 +191,24 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if (input.equalsIgnoreCase("set_filter")) {
+			changeButtons();
+			 JFrame f= new JFrame("CheckBox Example");  
+		     JCheckBox checkBox1 = new JCheckBox("High");  
+		     checkBox1.setBounds(100,100, 500,50);  
+		     JCheckBox checkBox2 = new JCheckBox("Medium");  
+		     checkBox2.setBounds(100,150, 500,50);  
+		     JCheckBox checkBox3 = new JCheckBox("Low");  
+		     checkBox3.setBounds(100,200, 500,50);  
+		     JCheckBox checkBox4 = new JCheckBox("Off");  
+		     checkBox4.setBounds(100,250, 500,50);  
+		     f.add(checkBox1);  
+		     f.add(checkBox2);  
+		     f.add(checkBox3);  
+		     f.add(checkBox4);  
+		     f.setSize(400,400);  
+		     f.setLayout(null);  
+		     f.setVisible(true);  
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
 			pane = new JOptionPane("Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/result limit: set result queue size\n/play (+ songname)\n/help");
