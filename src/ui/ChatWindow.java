@@ -238,7 +238,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
 			pane = new JOptionPane(
-					"Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/result limit: set result queue size\n/play (+ songname)\n/help");
+					"Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/set filter: choose content filtering level (G, PG, PG-13, mild R)\n/result limit: set result queue size\n/play (+ songname)\n/help");
 			d = pane.createDialog(null, "Help Menu");
 			d.setLocation((int) (Math.random() * 1200), (int) (Math.random() * 600));
 			d.setVisible(true);
