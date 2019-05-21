@@ -78,7 +78,10 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				}
 			}
 		} else if (e.getKeyCode() == 47) {
-			GIFDisplay.shelbyIndex = 1;
+			if (Math.random()>0.5)
+				GIFDisplay.shelbyIndex = 1;
+			else
+				GIFDisplay.shelbyIndex = 3;
 		}
 	}
 
@@ -244,8 +247,12 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			d.setVisible(true);
 		}
 		userText.setText("");
-		if (GIFDisplay.shelbyIndex != -1)
-			GIFDisplay.shelbyIndex = 0;
+		if (GIFDisplay.shelbyIndex != -1) {
+			if (Math.random() > 0.5)
+				GIFDisplay.shelbyIndex = 0;
+			else
+				GIFDisplay.shelbyIndex = 4;
+		}
 	}
 
 	/**
