@@ -31,7 +31,7 @@ public class SpeechToText {
 	public String getTextFromWav(String filename) {
 		try {
 		StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(config);
-        InputStream stream = new FileInputStream(new File("test.wav"));
+        InputStream stream = new FileInputStream(new File(filename));
 
         recognizer.startRecognition(stream);
         SpeechResult result;

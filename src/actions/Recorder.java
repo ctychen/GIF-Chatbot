@@ -41,7 +41,7 @@ public class Recorder {
             try {
                //Thread.sleep(Integer.parseInt(JOptionPane
                //      .showInputDialog("How long do you want to record (seconds)")) * 1000);
-            	Thread.sleep(5000);
+            	Thread.sleep(2000);
             } catch (InterruptedException ex) {
                ex.printStackTrace();
             }
