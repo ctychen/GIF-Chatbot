@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\wang_\Fancy-Java-Thing\.metadata\.plugins\org.eclipse.jdt.core
+4004584427.index
+1067094681.index
