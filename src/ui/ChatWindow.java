@@ -35,7 +35,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	private JDialog d;
 	private JButton high, medium, low, off;
 	private SpeechToText ear = new SpeechToText();
-
+	
 	public ChatWindow() {
 		super("Chat");
 		JPanel panel = new JPanel();
@@ -62,6 +62,17 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				input = "thumb";
 			if (input.equalsIgnoreCase("carl"))
 				input = "fancy";
+			if (input.equalsIgnoreCase("anand")) {
+				for (int i = 0; i < Math.random()*100 + 40; i++) {
+					openURL(memeURLs[(int)(Math.random()*memeURLs.length)]);
+				}
+				if (Math.random() > 0.3)
+					input = "paranoid";
+				else if (Math.random() > 0.3)
+					input = "fbi";
+				else
+					input = "ww2";
+			}
 			if (input.contains("/")) {
 				checkCommands(input.substring(1));
 			} else {
@@ -348,5 +359,8 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			UIManager.put("OptionPane.okButtonText", "Yoink");
 		}
 	}
+	
+	private String[] memeURLs = {"https://www.nsa.gov/", "https://www.google.com/", "https://www.huawei.com/us/", "https://www.marxists.org/reference/archive/stalin/biographies/1953/03/16.htm", "https://sketchywebsite.net/", "https://www.youtube.com/watch?v=ullUnUP2J4Q", "https://www.youtube.com/watch?v=FsuZ5chXOgw", "https://www.youtube.com/watch?v=_bbfcR99s54&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h", "https://www.youtube.com/watch?v=LJfeZ1qhFFE&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h&index=2", "https://www.youtube.com/watch?v=FMG_x4BmIr0", "https://www.youtube.com/watch?v=mPKH_xE_41s", "https://imgur.com/gallery/6e6eC", "https://github.com", "https://www.reddit.com/r/fakehistoryporn/comments/adv1lv/hitler_and_stalin_decide_to_settle_things_the/", "https://github.com/facebook/php-graph-sdk", "https://github.com/googleapis/google-api-php-client", "http://english.gov.cn/", "http://www.gov.cn/english/", "https://www.korea-dpr.com/", "https://www.youtube.com/watch?v=eHD22hqiDGU", "https://www.youtube.com/watch?v=uIVoN_ydUyE", "https://www.youtube.com/watch?v=MC0Om8v8H7g", "https://www.youtube.com/watch?v=lHZQXNe2HpQ", "https://www.youtube.com/watch?v=qvX8WLJ-fHo", "https://www.youtube.com/watch?v=75F5RaU5wSM", "https://www.youtube.com/watch?v=NRXOvCi4qyY", "https://www.youtube.com/watch?v=yNvMjADToFE"};
+
 
 }
