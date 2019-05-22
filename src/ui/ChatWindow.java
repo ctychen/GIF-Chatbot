@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.json.JSONException;
 
+import analytics.SpeechToText;
 import web.JSONTools;
 import web.MindReader;
 import web.Tenor;
@@ -33,6 +34,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	private String input;
 	private JDialog d;
 	private JButton high, medium, low, off;
+	private SpeechToText ear = new SpeechToText();
 
 	public ChatWindow() {
 		super("Chat");
@@ -86,7 +88,9 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void checkCommands(String input) {
-		if (input.equalsIgnoreCase("get_url")) {
+		if (input.equalsIgnoreCase("record")) {
+			userText.setText(ear.getTextFromWav(ear.listen()));
+		} else if (input.equalsIgnoreCase("get_url")) {
 
 			StringSelection stringSelection = new StringSelection(GIFDisplay.getURL());
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -241,7 +245,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		} else if (input.equalsIgnoreCase("help") || input.equals("?")) {
 			changeButtons();
 			pane = new JOptionPane(
-					"Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/set filter: choose content filtering level (G, PG, PG-13, mild R)\n/result limit: set result queue size\n/play (+ songname)\n/help");
+					"Available Commands:\n/get url: copies gif url to clipboard\n/refresh: reload screen\n/trash: clear cache\n/hide shelby\n/resolution: adjust display\n/toggle scaling: scale display\n/set filter: choose content filtering level (G, PG, PG-13, mild R)\n/result limit: set result queue size\n/play (+ songname)\n/set filter\n/record\n/help");
 			d = pane.createDialog(null, "Help Menu");
 			d.setLocation((int) (Math.random() * 1200), (int) (Math.random() * 600));
 			d.setVisible(true);

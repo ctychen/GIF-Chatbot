@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="common-lang3.jar"/>
 	<classpathentry kind="lib" path="commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="lavaplayer-1.2.63.jar" sourcepath="/lavaplayer-master/common/src"/>
+	<classpathentry kind="lib" path="lib/sphinx4-core-5prealpha.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
