@@ -35,6 +35,7 @@ public class SpeechToText {
 
 	public String getTextFromWav(String filename) {
 		try {
+			transcribe();
 			StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(config);
 			InputStream stream = new FileInputStream(new File(filename));
 
@@ -46,6 +47,7 @@ public class SpeechToText {
 			recognizer.stopRecognition();
 		} catch (Exception e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -72,8 +74,8 @@ public class SpeechToText {
 
 		StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(configuration);
 		InputStream stream = SpeechToText.class
-				.getResourceAsStream("/edu/cmu/sphinx/demo/aligner/10001-90210-01803.wav");
-		stream.skip(44);
+				.getResourceAsStream("assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		//stream.skip(44);
 
 		// Simple recognition with generic model
 		recognizer.startRecognition(stream);
@@ -96,8 +98,8 @@ public class SpeechToText {
 
 		// Live adaptation to speaker with speaker profiles
 
-		stream = SpeechToText.class.getResourceAsStream("/edu/cmu/sphinx/demo/aligner/10001-90210-01803.wav");
-		stream.skip(44);
+		stream = SpeechToText.class.getResourceAsStream("assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		//stream.skip(44);
 
 		// Stats class is used to collect speaker-specific data
 		Stats stats = recognizer.createStats(1);
@@ -112,8 +114,8 @@ public class SpeechToText {
 		recognizer.setTransform(transform);
 
 		// Decode again with updated transform
-		stream = SpeechToText.class.getResourceAsStream("/edu/cmu/sphinx/demo/aligner/10001-90210-01803.wav");
-		stream.skip(44);
+		stream = SpeechToText.class.getResourceAsStream("assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		//stream.skip(44);
 		recognizer.startRecognition(stream);
 		while ((result = recognizer.getResult()) != null) {
 			System.out.format("Hypothesis: %s\n", result.getHypothesis());
