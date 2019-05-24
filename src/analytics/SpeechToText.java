@@ -15,7 +15,12 @@ import edu.cmu.sphinx.decoder.adaptation.Transform;
 import edu.cmu.sphinx.result.WordResult;
 import web.MindReader;
 
-//http://www.java-gaming.org/index.php?topic=36723.0
+/**
+ * Based on: http://www.java-gaming.org/index.php?topic=36723.0
+ * 
+ * @author cchen351, clerdorf786
+ *
+ */
 
 public class SpeechToText {
 	Configuration config;
@@ -73,7 +78,8 @@ public class SpeechToText {
 		configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
 
 		StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(configuration);
-		InputStream stream = SpeechToText.class.getResourceAsStream(MindReader.fileSep + "assets" + MindReader.fileSep + "testAudio.wav");
+		InputStream stream = SpeechToText.class
+				.getResourceAsStream(MindReader.fileSep + "assets" + MindReader.fileSep + "testAudio.wav");
 		stream.skip(44);
 
 		// Simple recognition with generic model
@@ -97,7 +103,8 @@ public class SpeechToText {
 
 		// Live adaptation to speaker with speaker profiles
 
-		stream = SpeechToText.class.getResourceAsStream(MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		stream = SpeechToText.class.getResourceAsStream(
+				MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
 		stream.skip(44);
 
 		// Stats class is used to collect speaker-specific data
@@ -113,7 +120,8 @@ public class SpeechToText {
 		recognizer.setTransform(transform);
 
 		// Decode again with updated transform
-		stream = SpeechToText.class.getResourceAsStream(MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		stream = SpeechToText.class.getResourceAsStream(
+				MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
 		stream.skip(44);
 		recognizer.startRecognition(stream);
 		while ((result = recognizer.getResult()) != null) {

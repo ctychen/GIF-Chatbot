@@ -20,6 +20,8 @@ import ui.GIFDisplay;
 
 /**
  * Utility class for working with JSON files
+ * 
+ * @author clerdorf786
  */
 public class JSONTools {
 
@@ -53,7 +55,6 @@ public class JSONTools {
 	}
 
 	/**
-	 * Self Explanatory
 	 * 
 	 * @param url
 	 * @return A string containing the JSON
@@ -62,7 +63,7 @@ public class JSONTools {
 	 */
 	public static String readJsonFromUrlAndPutItIntoAString(String url) throws IOException, JSONException {
 		InputStream is = new URL(url).openStream();
-		System.out.println("URL="+url);
+		System.out.println("URL=" + url);
 		try {
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 			return readAll(rd);
@@ -91,22 +92,16 @@ public class JSONTools {
 		}
 		return result;
 	}
-	
+
 	/**
-	 * @param JSON 
+	 * @param JSON
 	 * @return YouTube video search result as link
 	 */
 	public static String getVideoLink(String JSON) {
 		String result = null;
-		//System.out.println(JSON);
-		//StringSelection stringSelection = new StringSelection(JSON);
-		//Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-		//clipboard.setContents(stringSelection, null);
-		int fancyIndex = JSON.indexOf("data-context-item-id=")+22;
+		int fancyIndex = JSON.indexOf("data-context-item-id=") + 22;
 		result = JSON.substring(fancyIndex, JSON.indexOf("\"", fancyIndex));
-		//result = JSON.substring(JSON.indexOf("=\"") + 2);
-		//result = result.substring(0, result.indexOf("\"", 3));	
-		
+
 		return "https://www.youtube.com/watch?v=" + result;
 	}
 }

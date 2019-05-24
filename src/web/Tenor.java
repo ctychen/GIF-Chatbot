@@ -1,6 +1,7 @@
 package web;
 
 import java.awt.List;
+import java.awt.event.ActionEvent;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -24,7 +25,8 @@ import org.json.JSONException;
 
 /**
  * Fetches GIFs matching a certain keyword using the Tenor API
- * @author claire, carl 
+ * 
+ * @author clerdorf786, cchen351
  *
  */
 public class Tenor {
@@ -34,7 +36,7 @@ public class Tenor {
 	private String APIKey;
 	private String locale = "en_US";
 	private String filter = "medium"; // G + PG
-	private final String[] resolutions = {"nanogif", "tinygif", "mediumgif", "gif"};
+	private final String[] resolutions = { "nanogif", "tinygif", "mediumgif", "gif" };
 	private int res = 2;
 
 	/**
@@ -50,29 +52,31 @@ public class Tenor {
 	 * @param APIKey Your Tenor API Key
 	 */
 	public Tenor(String APIKey) {
-		this.APIKey = APIKey; 
+		this.APIKey = APIKey;
 	}
-	
+
 	/**
 	 * Sets content filter from user input
-	 * @param filter
+	 * 
+	 * @param filter; high for G, medium for G/PG, low for G/PG/PG-13, off for no
+	 *        filter
 	 */
 	public void setFilter(String filter) {
 		this.filter = filter;
 	}
-	
+
 	/**
 	 * 
 	 * @param res The new resolution (0-nanogif, 1-tinygif, 2-mediumgif, 3-gif)
 	 */
 	public void setRes(int res) {
-		this.res = res%4;
+		this.res = res % 4;
 	}
-	
+
 	public void setResultLimit(int resultLimit) {
 		this.resultLimit = resultLimit;
 	}
-	
+
 	/**
 	 * 
 	 * @return Returns the current resolution as a string (Ex: nanogif)
@@ -92,28 +96,31 @@ public class Tenor {
 	 * @return JSON results of the search query if successful, null if not
 	 */
 	public String fetch(String url, int ttl) {
-		File f = new File(System.getProperty("user.dir") + MindReader.fileSep  + "tenorJSON");
-		try{
-		    if(f.mkdir()) { 
-		        System.out.println("Directory Created");
-		    } else {
-		        System.out.println("Directory is not created");
-		    }
-		} catch(Exception e){
-		    e.printStackTrace();
-		} 
-		
-		//ttl = 0;
-		String filename = System.getProperty("user.dir") + MindReader.fileSep + "tenorJSON" + MindReader.fileSep + md5(url) + ".JSON";
+		File f = new File(System.getProperty("user.dir") + MindReader.fileSep + "tenorJSON");
+		try {
+			if (f.mkdir()) {
+				System.out.println("Directory Created");
+			} else {
+				System.out.println("Directory is not created");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// ttl = 0;
+		String filename = System.getProperty("user.dir") + MindReader.fileSep + "tenorJSON" + MindReader.fileSep
+				+ md5(url) + ".JSON";
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
 			if (now.toEpochSecond(ZoneOffset.UTC) + 25200 - ts.toMillis() / 1000 < ttl) {
-				//System.out.println("Found JSON in cache " + now.toEpochSecond(ZoneOffset.UTC) + " " + (ts.toMillis() / 1000));
-				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON with "\n" to separate lines
+				// System.out.println("Found JSON in cache " + now.toEpochSecond(ZoneOffset.UTC)
+				// + " " + (ts.toMillis() / 1000));
+				return MindReader.read(filename); // MindReader reads the contents of the text file and returns the JSON
+													// with "\n" to separate lines
 			} else {
-				MindReader.erase(filename); //Deletes the file if it is too old
+				MindReader.erase(filename); // Deletes the file if it is too old
 			}
 		} catch (IOException e) {
 		}
@@ -143,81 +150,92 @@ public class Tenor {
 	 * 
 	 * @param query A simple term, such as "fancy"
 	 * @return JSON result of the query.
-	 *         
+	 * 
 	 */
 	public String search(String query) { // anon_id may be used for rating
 
-		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit + "&contentfilter="+filter, 600); // URL should be https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
+		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit + "&contentfilter="
+				+ filter, 600); // URL should be
+								// https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
 	}
 
 	/**
 	 * Given a json, finds a random gif url and returns it
+	 * 
 	 * @param json THe JSON to find a URL in
-	 * @return A URL to a random gif present in the inputted JSON, if it can't find one then it returns null
+	 * @return A URL to a random gif present in the inputted JSON, if it can't find
+	 *         one then it returns null
 	 */
 	public String getGIFURL(String json) {
 		String result = null;
 		int count = 0;
 		int fancyIndex = -1;
 		while (fancyIndex == -1 && count < 60) {
-			fancyIndex = (json.indexOf("\"" + resolutions[res] + "\":", (int)(Math.random()*json.length())));
+			fancyIndex = (json.indexOf("\"" + resolutions[res] + "\":", (int) (Math.random() * json.length())));
 			count++;
 		}
 		if (fancyIndex != -1)
-			result = json.substring(json.indexOf("\"url\":", fancyIndex)+8, json.indexOf(".gif\",", fancyIndex+1)+4);
+			result = json.substring(json.indexOf("\"url\":", fancyIndex) + 8,
+					json.indexOf(".gif\",", fancyIndex + 1) + 4);
 		return result;
 	}
-	
+
 	/**
-	 * Given a URL, returns a filename for a GIF stored locally, if no such GIF exists, it downloads it from the URL and creates it under a filename equal to the md5 of the url
+	 * Given a URL, returns a filename for a GIF stored locally, if no such GIF
+	 * exists, it downloads it from the URL and creates it under a filename equal to
+	 * the md5 of the url
+	 * 
 	 * @param url The url of the image
-	 * @return A  filename for a local image
+	 * @return A filename for a local image
 	 */
-	public String getGIFFromLocal(String url, int ttl)  { //Credit : https://www.programcreek.com/2012/12/download-image-from-url-in-java/
+	public String getGIFFromLocal(String url, int ttl) { // Credit :
+															// https://www.programcreek.com/2012/12/download-image-from-url-in-java/
 		String result = null;
-		//ttl = 0;
-		String filename = System.getProperty("user.dir") + MindReader.fileSep  + "images" + MindReader.fileSep + md5(url) + ".gif";
+		// ttl = 0;
+		String filename = System.getProperty("user.dir") + MindReader.fileSep + "images" + MindReader.fileSep + md5(url)
+				+ ".gif";
 		FileTime ts;
 		try {
 			ts = Files.getLastModifiedTime(Paths.get(filename));
 			LocalDateTime now = LocalDateTime.now();
 			if (now.toEpochSecond(ZoneOffset.UTC) + 25200 - ts.toMillis() / 1000 < ttl) {
-				return filename; 
+				return filename;
 			} else {
-				MindReader.erase(filename); //Deletes image if too old
+				MindReader.erase(filename); // Deletes image if too old
 			}
 		} catch (IOException e) {
 		}
-		
+
 		InputStream is = null;
 		OutputStream os = null;
-		
-		File f = new File(System.getProperty("user.dir") + MindReader.fileSep  + "images");
-		try{
-		    if(f.mkdir()) { 
-		        System.out.println("Directory Created");
-		    } else {
-		        System.out.println("Directory is not created");
-		    }
-		} catch(Exception e){
-		    e.printStackTrace();
-		} 
+
+		File f = new File(System.getProperty("user.dir") + MindReader.fileSep + "images");
+		try {
+			if (f.mkdir()) {
+				System.out.println("Directory Created");
+			} else {
+				System.out.println("Directory is not created");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		try {
 			URL fancyUrl = new URL(url);
-			String destName = System.getProperty("user.dir") + MindReader.fileSep + "images" + MindReader.fileSep + md5(url) + ".gif";
+			String destName = System.getProperty("user.dir") + MindReader.fileSep + "images" + MindReader.fileSep
+					+ md5(url) + ".gif";
 			System.out.println("Creating file: " + destName);
-		 
+
 			is = new BufferedInputStream(fancyUrl.openStream());
 			os = new BufferedOutputStream(new FileOutputStream(destName));
-		 
+
 			byte[] b = new byte[2048];
 			int length;
-		 
+
 			while ((length = is.read(b)) != -1) {
 				os.write(b, 0, length);
 			}
 			result = destName;
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println("Error downloading file from URL: " + url);
 			System.out.println(e);
 		} finally {
@@ -232,7 +250,7 @@ public class Tenor {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Hashes the string into an md5
 	 * 
@@ -265,11 +283,10 @@ public class Tenor {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
 	public static void main(String args[]) {
 		Tenor yeet = new Tenor();
-		//System.out.println(yeet.search("fancy"));
+		// System.out.println(yeet.search("fancy"));
 		System.out.println(yeet.getGIFFromLocal(yeet.getGIFURL(yeet.search("fancy")), 600));
 	}
 
