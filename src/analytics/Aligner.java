@@ -34,7 +34,7 @@ public class Aligner {
 		URL audioUrl;
 		String transcript;
 
-		audioUrl = Aligner.class.getResource("assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
+		audioUrl = Aligner.class.getResource("assets" + MindReader.fileSep + "testAudio.wav");
 		transcript = TEXT;
 
 		String acousticModelPath = ACOUSTIC_MODEL_PATH;
