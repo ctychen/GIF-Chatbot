@@ -18,39 +18,40 @@ _Final Project for Mr. Shelby’s 5th period, 2018-2019 class._
 
 ## Features:
 ### Must Haves:
-Pull memes from websites based on category
+Pull meme GIFs using Tenor API based on category
 
 
-Get and analyse large data set
+Gets and analyses large data set
 
 
-Display gif/image on screen
+Display gif/image on screen (PApplet)
 
 
 Analyzes text input from user and replies with relevant photo/meme/gif
 
 
-Does something useful: opens programs, plays music, etc are sample ideas (“Play me some music” for example. 
-It would also be fun if it could tell you about the weather forecast if you ask it; “What’s the weather like at ________”
+Plays music based on user request
 
 
-School appropriate demo mode (doesn’t pull memes off all of Reddit)
+School appropriate demo mode
 
 
 ### Want-To-Haves:
-Speech to text with mic instead of typing (for the pi)
+
+Speech to text with mic instead of typing (for the pi) (STATUS AS OF MAY 24TH: IS BEING DEBUGGED)
 
 
-Sentiment analysis
+Sentiment analysis (STATUS AS OF MAY 24TH: WORKING)
 
 
-Rate memes (help the bot improve future results through user input)
+Rate memes (help the bot improve future results through user input) (STATUS AS OF MAY 24TH: NOPE)
 
 
-Different modes: SAFE mode for only memes that are work/school ok - no swearing, etc; NSFW mode for unfiltered, all memes
+Different modes: SAFE mode for only memes that are work/school ok - no swearing, etc; NSFW mode for unfiltered, all memes (STATUS AS OF MAY 24TH: WORKING)
 
 
 Maybe also finds music relevant to the sentiment analysis results
+
 
 ### Stretch features:
 Pi screen on gimbal that always points towards the victim 
@@ -72,36 +73,33 @@ Multiple personalities
 
 
 ## Class List:
-User interface/ChatWindow
 
-MemeGetter (JSON parsing):
-
-Has-a cache of JSON files and a cache of meme images already loaded. Parses the JSON when necessary
-After a search query, cash all results and pick a random one, cached memes should only stay cached for a limited time, like an hour or something
+Main
 
 
-SmartBoi: 
-Thing that processes text input and figures out what to do (send a meme? Open a program? Play a song?)
+ChatWindow
 
 
-TextAnalyzer
-Parses user input and looks for keywords, which will be used by TunaFish and SmartBoi
+GIFDisplay
 
 
-Tuna fish/MemeRater
-Handles rating memes and choosing a meme out of queued ones to show, based on analyzed sentiment of user
+JSONTools
 
 
-ActionDoer
+Analysis, Analyzer (for sentiment analysis)
 
 
 Meme
 
 
-AnimatedGIF
+Tenor
 
 
-Cache
+MindReader (File Reader)
+
+
+SpeechToText, Recorder, Aligner
+
 
 ## Responsibilities:
 By May 5th, figure out how we are going to get the memes
