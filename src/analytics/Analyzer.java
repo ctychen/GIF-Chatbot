@@ -17,18 +17,27 @@ import edu.stanford.nlp.parser.lexparser.*;
 /**
  * Analyzes the text and returns an Analysis of the text
  *
+ * @author zwang695
  */
 public class Analyzer {
 	
 	private Properties props;
 	private StanfordCoreNLP pipeline;
 	
+	/**
+	 * Creates a new instance of an Analyzer object that initializes the NLP pipeline
+	 */
 	public Analyzer() {
 		props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
 		pipeline = new StanfordCoreNLP(props);
 	}
 	
+	/**
+	 * 
+	 * @param text the text that is being analyzed
+	 * @return an analysis of the text
+	 */
 	public Analysis getResult(String text) {
 
 		Analysis result = new Analysis();
