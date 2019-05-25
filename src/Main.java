@@ -9,6 +9,7 @@ import processing.core.PApplet;
 public class Main {
 
 	public static void main(String args[]) {
+		//System.out.println("YOINK");
 		ChatWindow window = new ChatWindow();
 		window.setBounds(300, 300, 700, 300);
 		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);

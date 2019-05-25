@@ -41,10 +41,11 @@ public class Analyzer {
 	public Analysis getResult(String text) {
 
 		Analysis result = new Analysis();
-
+		
 		if (text != null && text.length() > 0) {
 			
 			Annotation annotation = pipeline.process(text);
+			
 
 			for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
 				Tree tree = sentence.get(SentimentCoreAnnotations.SentimentAnnotatedTree.class);
