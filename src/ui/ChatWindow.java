@@ -39,9 +39,11 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	private SpeechToText ear = new SpeechToText();
 	private Analyzer sentimentAnalyzer;
 	private Analysis sentimentResult;
-	private String[] positivity = {"fancy", "happy", "funny", "yeet", "yoink", "amazing"};
-	private String[] negativity = {"depressing", "sad", "unhappy", "unfortunate", "terrible"};
-	
+	private String[] positivity = { "fancy", "happy", "awesome", "fun", "funny", "yeet", "yoink", "amazing", "excited",
+			"yay", "wow" };
+	private String[] negativity = { "depressing", "sad", "unhappy", "unfortunate", "terrible", "ouch", "oof", "unlucky",
+			"not feeling so good" };
+
 	public ChatWindow() {
 		super("Chat");
 		JPanel panel = new JPanel();
@@ -69,8 +71,8 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			if (input.equalsIgnoreCase("carl"))
 				input = "fancy";
 			if (input.equalsIgnoreCase("anand")) {
-				for (int i = 0; i < Math.random()*100 + 40; i++) {
-					openURL(memeURLs[(int)(Math.random()*memeURLs.length)]);
+				for (int i = 0; i < Math.random() * 100 + 40; i++) {
+					openURL(memeURLs[(int) (Math.random() * memeURLs.length)]);
 				}
 				if (Math.random() > 0.3)
 					input = "paranoid";
@@ -85,26 +87,27 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				if (getWordCount(input) > 2) {
 					for (int i = 0; i < input.length(); i++)
 						if (input.charAt(i) == '_')
-							input = input.substring(0, i) + " " + input.substring(i+1);
+							input = input.substring(0, i) + " " + input.substring(i + 1);
 					System.out.println("Long input, running sentiment analysis on " + input);
 					sentimentAnalyzer = new Analyzer();
 					sentimentResult = sentimentAnalyzer.getResult(input);
-					//System.out.println("Sentiment Score: " + sentimentResult.getSentimentScore());
-					//System.out.println("Sentiment Type: " + sentimentResult.getSentimentType());
-					
-					switch ((int)sentimentResult.getSentimentScore()) {  // If the user is in a good mood, we got to turn that smile upside down, if they are in a bad mood, then we gotta cheer them up
-						case 0:
-						case 1:
-						case 2:
-							input = positivity[(int)(Math.random()*positivity.length)];
-							break;
-						case 3:
-						case 4:
-							input = negativity[(int)(Math.random()*negativity.length)];
-							break;
+					switch ((int) sentimentResult.getSentimentScore()) { // If the user is in a good mood, we got to
+																			// turn that smile upside down, if they are
+																			// in a bad mood, then we gotta cheer them
+																			// up
+					case 0:
+					case 1:
+					case 2:
+						input = positivity[(int) (Math.random() * positivity.length)];
+						break;
+					case 3:
+					case 4:
+						input = negativity[(int) (Math.random() * negativity.length)];
+						break;
 					}
-					System.out.println("Sentiment Result = " + sentimentResult.getSentimentScore() + ", new search term = " + input);
-						
+					System.out.println("Sentiment Result = " + sentimentResult.getSentimentScore()
+							+ ", new search term = " + input);
+
 				}
 				String temp = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
 				if (temp != null) {
@@ -121,7 +124,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 				}
 			}
 		} else if (e.getKeyCode() == 47) {
-			if (Math.random()>0.5)
+			if (Math.random() > 0.5)
 				GIFDisplay.shelbyIndex = 1;
 			else
 				GIFDisplay.shelbyIndex = 3;
@@ -323,25 +326,24 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		JButton b = (JButton)arg0.getSource();
-	    if (b==high)
-	    	fancyTenor.setFilter("high");
-	    else if (b == medium)
-	      fancyTenor.setFilter("medium");
-	    else if (b == low)
-	      fancyTenor.setFilter("low");
-	    else if (b == off)
-	      fancyTenor.setFilter("off");
-	    JOptionPane.showMessageDialog(null,
-	            "Filter set", "Content filter has been set", JOptionPane.PLAIN_MESSAGE);
-	    repaint();
+		JButton b = (JButton) arg0.getSource();
+		if (b == high)
+			fancyTenor.setFilter("high");
+		else if (b == medium)
+			fancyTenor.setFilter("medium");
+		else if (b == low)
+			fancyTenor.setFilter("low");
+		else if (b == off)
+			fancyTenor.setFilter("off");
+		JOptionPane.showMessageDialog(null, "Filter set", "Content filter has been set", JOptionPane.PLAIN_MESSAGE);
+		repaint();
 	}
-	
+
 	private int getWordCount(String s) {
 		if (s.length() > 0) {
-			for (int i = 0; i < s.length()-1; i++) {
-				while (s.charAt(i) == '_' && s.charAt(i+1) == '_') {
-					s = s.substring(0, i) + s.substring(i+1);
+			for (int i = 0; i < s.length() - 1; i++) {
+				while (s.charAt(i) == '_' && s.charAt(i + 1) == '_') {
+					s = s.substring(0, i) + s.substring(i + 1);
 				}
 			}
 			int result = 1;
@@ -406,9 +408,25 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 			UIManager.put("OptionPane.okButtonText", "Yoink");
 		}
 	}
-	
-	// Don't worry about this, if you want to keep your sanity then don't open the links
-	private String[] memeURLs = {"https://artofproblemsolving.com/community/c512764_randomly_generated_noise?fbclid=IwAR1qN_a7Cp40J5EL3rgwgHixnxMQPv2Q4YRCIQNBHJBamoAd1New6EKqhFs", "https://www.nsa.gov/", "https://www.google.com/", "https://www.huawei.com/us/", "https://www.marxists.org/reference/archive/stalin/biographies/1953/03/16.htm", "https://sketchywebsite.net/", "https://www.youtube.com/watch?v=ullUnUP2J4Q", "https://www.youtube.com/watch?v=FsuZ5chXOgw", "https://www.youtube.com/watch?v=_bbfcR99s54&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h", "https://www.youtube.com/watch?v=LJfeZ1qhFFE&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h&index=2", "https://www.youtube.com/watch?v=FMG_x4BmIr0", "https://www.youtube.com/watch?v=mPKH_xE_41s", "https://imgur.com/gallery/6e6eC", "https://github.com", "https://www.reddit.com/r/fakehistoryporn/comments/adv1lv/hitler_and_stalin_decide_to_settle_things_the/", "https://github.com/facebook/php-graph-sdk", "https://github.com/googleapis/google-api-php-client", "http://english.gov.cn/", "http://www.gov.cn/english/", "https://www.korea-dpr.com/", "https://www.youtube.com/watch?v=eHD22hqiDGU", "https://www.youtube.com/watch?v=uIVoN_ydUyE", "https://www.youtube.com/watch?v=MC0Om8v8H7g", "https://www.youtube.com/watch?v=lHZQXNe2HpQ", "https://www.youtube.com/watch?v=qvX8WLJ-fHo", "https://www.youtube.com/watch?v=75F5RaU5wSM", "https://www.youtube.com/watch?v=NRXOvCi4qyY", "https://www.youtube.com/watch?v=yNvMjADToFE"};
 
+	// Don't worry about this, if you want to keep your sanity then don't open the
+	// links
+	private String[] memeURLs = {
+			"https://artofproblemsolving.com/community/c512764_randomly_generated_noise?fbclid=IwAR1qN_a7Cp40J5EL3rgwgHixnxMQPv2Q4YRCIQNBHJBamoAd1New6EKqhFs",
+			"https://www.nsa.gov/", "https://www.google.com/", "https://www.huawei.com/us/",
+			"https://www.marxists.org/reference/archive/stalin/biographies/1953/03/16.htm",
+			"https://sketchywebsite.net/", "https://www.youtube.com/watch?v=ullUnUP2J4Q",
+			"https://www.youtube.com/watch?v=FsuZ5chXOgw",
+			"https://www.youtube.com/watch?v=_bbfcR99s54&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h",
+			"https://www.youtube.com/watch?v=LJfeZ1qhFFE&list=PLVo9VqIBoF-k_NiaCn9QaAB5tR16fd02h&index=2",
+			"https://www.youtube.com/watch?v=FMG_x4BmIr0", "https://www.youtube.com/watch?v=mPKH_xE_41s",
+			"https://imgur.com/gallery/6e6eC", "https://github.com",
+			"https://www.reddit.com/r/fakehistoryporn/comments/adv1lv/hitler_and_stalin_decide_to_settle_things_the/",
+			"https://github.com/facebook/php-graph-sdk", "https://github.com/googleapis/google-api-php-client",
+			"http://english.gov.cn/", "http://www.gov.cn/english/", "https://www.korea-dpr.com/",
+			"https://www.youtube.com/watch?v=eHD22hqiDGU", "https://www.youtube.com/watch?v=uIVoN_ydUyE",
+			"https://www.youtube.com/watch?v=MC0Om8v8H7g", "https://www.youtube.com/watch?v=lHZQXNe2HpQ",
+			"https://www.youtube.com/watch?v=qvX8WLJ-fHo", "https://www.youtube.com/watch?v=75F5RaU5wSM",
+			"https://www.youtube.com/watch?v=NRXOvCi4qyY", "https://www.youtube.com/watch?v=yNvMjADToFE" };
 
 }
