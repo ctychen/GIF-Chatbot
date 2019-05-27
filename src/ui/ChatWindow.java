@@ -1,6 +1,9 @@
 package ui;
 
 import java.awt.*;
+import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
@@ -30,7 +33,7 @@ import java.net.URISyntaxException;
  *
  */
 public class ChatWindow extends JFrame implements ActionListener, KeyListener {
-	private static JTextField userText;
+	public static JTextField userText;
 	private Tenor fancyTenor;
 	private JOptionPane pane;
 	private String input;
@@ -47,7 +50,7 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 2));
 
-		panel.add(new JLabel("Chat here, or type /help to see the list of commands"));
+		panel.add(new JLabel("Press the button to talk"));
 		userText = new JTextField(3);
 		userText.setHorizontalAlignment(JTextField.RIGHT);
 		userText.addKeyListener(this);
@@ -56,14 +59,129 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 		Container c = getContentPane();
 		c.add(panel, BorderLayout.CENTER);
 		fancyTenor = new Tenor();
+		
+		try {
+			GpioController gpio = GpioFactory.getInstance();
+			GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_27, PinPullResistance.PULL_UP);
+			myButton.setShutdownOptions(true);
+			myButton.addListener(new GpioPinListenerDigital() {
+	            @Override
+	            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+	            	userText.setText("");
+	                // display pin state on console
+	                System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
+	                if (event.getState().toString().equals("LOW")) {
+	                	String input = userText.getText().replaceAll(" ", "_");
+	        			if (input == null || input.length() == 0 || input.equalsIgnoreCase("/record") || input.equals("/rec")) {
+	        				
+	        				input = ear.getTextFromWav(ear.listen());
+	        				userText.setText(input);
+	        				for (int i = 0; i < input.length(); i++) {
+	        					if (input.charAt(i) == ' ') {
+	        						input = input.substring(0, i) + "_" + input.substring(i+1);
+	        					}
+	        				}
+	        				if (input.indexOf("delet") != -1 || input.indexOf("trash") != -1) {
+	        					try {
+	        						int t1 = MindReader.folderClean("tenorJSON", 0);
+	        						int t2 = MindReader.folderClean("images", 0);
+	        							
+	        					} catch (Exception f) {
+	        						System.out.println(f);
+	        					}
+	        				}
+	        			}
+	        			if (input.equalsIgnoreCase("osman"))
+	        				input = "thumb";
+	        			if (input.equalsIgnoreCase("carl"))
+	        				input = "fancy";
+	        			if (input.equalsIgnoreCase("anand")) {
+	        				for (int i = 0; i < Math.random()*100 + 40; i++) {
+	        					openURL(memeURLs[(int)(Math.random()*memeURLs.length)]);
+	        				}
+	        				if (Math.random() > 0.3)
+	        					input = "paranoid";
+	        				else if (Math.random() > 0.3)
+	        					input = "fbi";
+	        				else
+	        					input = "ww2";
+	        			}
+	        			if (input.contains("/")) {
+	        				checkCommands(input.substring(1));
+	        			} else {
+	        				if (getWordCount(input) > 2) {
+	        					for (int i = 0; i < input.length(); i++)
+	        						if (input.charAt(i) == '_')
+	        							input = input.substring(0, i) + " " + input.substring(i+1);
+	        					System.out.println("Long input, running sentiment analysis on " + input);
+	        					sentimentAnalyzer = new Analyzer();
+	        					sentimentResult = sentimentAnalyzer.getResult(input);
+	        					//System.out.println("Sentiment Score: " + sentimentResult.getSentimentScore());
+	        					//System.out.println("Sentiment Type: " + sentimentResult.getSentimentType());
+	        					
+	        					switch ((int)sentimentResult.getSentimentScore()) {  // If the user is in a good mood, we got to turn that smile upside down, if they are in a bad mood, then we gotta cheer them up
+	        						case 0:
+	        						case 1:
+	        						case 2:
+	        							input = positivity[(int)(Math.random()*positivity.length)];
+	        							break;
+	        						case 3:
+	        						case 4:
+	        							input = negativity[(int)(Math.random()*negativity.length)];
+	        							break;
+	        					}
+	        					System.out.println("Sentiment Result = " + sentimentResult.getSentimentScore() + ", new search term = " + input);
+	        						
+	        				}
+	        				String temp = fancyTenor.getGIFURL(fancyTenor.search(input)); // This is where the magic happens
+	        				if (temp != null) {
+	        					GIFDisplay.memeWebURL = temp;
+	        					GIFDisplay.memeURL = fancyTenor.getGIFFromLocal(GIFDisplay.memeWebURL, 600); // Magic also happens
+	        																									// here as well
+	        					GIFDisplay.shelbyIndex = 2;
+	        				} else {
+	        					changeButtons();
+	        					pane = new JOptionPane("No results");
+	        					d = pane.createDialog(null, "Ruh Roh");
+	        					d.setLocation((int) (Math.random() * 1200), (int) (Math.random() * 600));
+	        					d.setVisible(true);
+	        				}
+	        			}
+	        		}
+	            }
+	
+	        });
+		} catch (Exception e) {
+			System.out.println("Problem with GPIO" + e);
+		}
 	}
-
+	
 	/**
 	 * If the user presses "enter", the input will get parsed
 	 */
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == 10) { // Checks for 'return' key pressed
+		if (e.getKeyCode() == 10 || (e.getKeyCode() == 32 && (input == null || input.length() < 2))) { // Checks for 'return' key pressed
+			
 			String input = userText.getText().replaceAll(" ", "_");
+			if (e.getKeyCode() == 32 || input == null || input.length() == 0 || input.equalsIgnoreCase("/record") || input.equals("/rec")) {
+				
+				input = ear.getTextFromWav(ear.listen());
+				userText.setText(input);
+				for (int i = 0; i < input.length(); i++) {
+					if (input.charAt(i) == ' ') {
+						input = input.substring(0, i) + "_" + input.substring(i+1);
+					}
+				}
+				if (input.indexOf("delet") != -1 || input.indexOf("trash") != -1) {
+					try {
+						int t1 = MindReader.folderClean("tenorJSON", 0);
+						int t2 = MindReader.folderClean("images", 0);
+							
+					} catch (Exception f) {
+						System.out.println(f);
+					}
+				}
+			}
 			if (input.equalsIgnoreCase("osman"))
 				input = "thumb";
 			if (input.equalsIgnoreCase("carl"))
@@ -129,9 +247,8 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void checkCommands(String input) {
-		if (input.equalsIgnoreCase("record")) {
-			userText.setText(ear.getTextFromWav(ear.listen()));
-		} else if (input.equalsIgnoreCase("get_url")) {
+		
+		if (input.equalsIgnoreCase("get_url")) {
 
 			StringSelection stringSelection = new StringSelection(GIFDisplay.getURL());
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -340,9 +457,12 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	private int getWordCount(String s) {
 		if (s.length() > 0) {
 			for (int i = 0; i < s.length()-1; i++) {
-				while (s.charAt(i) == '_' && s.charAt(i+1) == '_') {
+				while (i+1 < s.length() && s.charAt(i) == '_' && s.charAt(i+1) == '_') {
 					s = s.substring(0, i) + s.substring(i+1);
 				}
+			}
+			while (s.charAt(s.length()-1) == '_') {
+				s = s.substring(0, s.length()-1);
 			}
 			int result = 1;
 			for (int i = 0; i < s.length(); i++) {

@@ -1,6 +1,7 @@
 package analytics;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,10 +14,12 @@ import edu.cmu.sphinx.api.StreamSpeechRecognizer;
 import edu.cmu.sphinx.decoder.adaptation.Stats;
 import edu.cmu.sphinx.decoder.adaptation.Transform;
 import edu.cmu.sphinx.result.WordResult;
+import ui.GIFDisplay;
 import web.MindReader;
 
 /**
  * Based on: http://www.java-gaming.org/index.php?topic=36723.0
+ * Also based on: https://github.com/cmusphinx/sphinx4/blob/master/sphinx4-samples/src/main/java/edu/cmu/sphinx/demo/transcriber/TranscriberDemo.java
  * 
  * @author cchen351, clerdorf786
  *
@@ -39,21 +42,38 @@ public class SpeechToText {
 	}
 
 	public String getTextFromWav(String filename) {
+		GIFDisplay.dispText = "Parsing Audio";
 		try {
-			transcribe();
+			//transcribe(filename);
+			//filename = "assets" + MindReader.fileSep  + "testAudio.wav";
 			StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(config);
+			GIFDisplay.dispText = "Streaming";
 			InputStream stream = new FileInputStream(new File(filename));
-
+			GIFDisplay.dispText = "Skipping Header";
+			stream.skip(44);
+			GIFDisplay.dispText = "Recognizing";
 			recognizer.startRecognition(stream);
 			SpeechResult result;
+			String finalResult = "";
+			String currentHypo;
+			GIFDisplay.dispText = "Hypothesizing";
 			while ((result = recognizer.getResult()) != null) {
-				System.out.format("Hypothesis: %s\n", result.getHypothesis());
+				currentHypo = result.getHypothesis();
+				finalResult += currentHypo + " ";
+				GIFDisplay.dispText = "\"" + currentHypo + "\"";
 			}
+			System.out.println("Final Hypothesis: " + finalResult);
+			GIFDisplay.dispText = "Stopping";
 			recognizer.stopRecognition();
+			GIFDisplay.dispText = null;
+			while (finalResult.charAt(finalResult.length()-1) == ' ') 
+				finalResult = finalResult.substring(0, finalResult.length()-1);
+			return finalResult;
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
 		}
+		GIFDisplay.dispText = null;
 		return null;
 	}
 
@@ -63,7 +83,7 @@ public class SpeechToText {
 	 * 
 	 * @throws Exception
 	 */
-	public static void transcribe() throws Exception {
+	public static void transcribe(String input) throws Exception {
 		System.out.println("Loading models...");
 
 		Configuration configuration = new Configuration();
@@ -78,11 +98,15 @@ public class SpeechToText {
 		configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
 
 		StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(configuration);
-		InputStream stream = SpeechToText.class
-				.getResourceAsStream(MindReader.fileSep + "assets" + MindReader.fileSep + "testAudio.wav");
-		stream.skip(44);
-
-		// Simple recognition with generic model
+		
+		//InputStream stream = SpeechToText.class.getClassLoader()
+		//		.getResourceAsStream("/assets/testAudio.wav");
+		InputStream stream = new FileInputStream(new File(input));
+		if (stream == null)
+			System.out.println("Stream is null");
+		//stream.skip(44);
+		
+		// Simple recognition with geric model
 		recognizer.startRecognition(stream);
 		SpeechResult result;
 		while ((result = recognizer.getResult()) != null) {
@@ -103,9 +127,8 @@ public class SpeechToText {
 
 		// Live adaptation to speaker with speaker profiles
 
-		stream = SpeechToText.class.getResourceAsStream(
-				MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
-		stream.skip(44);
+		stream = new FileInputStream(new File(input));
+		//stream.skip(44);
 
 		// Stats class is used to collect speaker-specific data
 		Stats stats = recognizer.createStats(1);
@@ -120,9 +143,8 @@ public class SpeechToText {
 		recognizer.setTransform(transform);
 
 		// Decode again with updated transform
-		stream = SpeechToText.class.getResourceAsStream(
-				MindReader.fileSep + "assets" + MindReader.fileSep + "audioclip-1558550904-8436.wav");
-		stream.skip(44);
+		stream = new FileInputStream(new File(input));
+		//stream.skip(44);
 		recognizer.startRecognition(stream);
 		while ((result = recognizer.getResult()) != null) {
 			System.out.format("Hypothesis: %s\n", result.getHypothesis());

@@ -15,5 +15,9 @@
 	<classpathentry kind="lib" path="lib/stanford-corenlp-3.8.0.jar"/>
 	<classpathentry kind="lib" path="/Users/carlfromca/Documents/GitHub/Fancy-Java-Thing/lib/stanford-corenlp-3.8.0.jar"/>
 	<classpathentry kind="lib" path="/Users/carlfromca/Documents/GitHub/Fancy-Java-Thing/lib/stanford-english-corenlp-2018-10-05-models.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-example.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,25 +10,27 @@ public class Main {
 
 	public static void main(String args[]) {
 		//System.out.println("YOINK");
-		ChatWindow window = new ChatWindow();
-		window.setBounds(300, 300, 700, 300);
-		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
-		window.setVisible(true);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		GIFDisplay drawing = new GIFDisplay();
 		PApplet.runSketch(new String[] { "" }, drawing);
 		PSurfaceAWT surf = (PSurfaceAWT) drawing.getSurface();
 		PSurfaceAWT.SmoothCanvas canvas = (PSurfaceAWT.SmoothCanvas) surf.getNative();
 		JFrame window2 = (JFrame) canvas.getFrame();
-		window2.setSize(400, 300);
-		window2.setMinimumSize(new Dimension(100, 100));
+		window2.setSize((int)((4f/3)*screenSize.getHeight()), (int)screenSize.getHeight());
+		window2.setMinimumSize(new Dimension((int)((4f/3)*screenSize.getHeight()), (int)screenSize.getHeight()));
 		window2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window2.setResizable(true);
+		window2.setLocation(0, 0);
+		window2.setSize((int)((4f/3)*screenSize.getHeight()), (int)screenSize.getHeight());
 
 		window2.setVisible(true);
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		window2.setLocation(screenSize.width/2-window2.getSize().width/2, screenSize.height/2-window2.getSize().height/2-window.getSize().height);
-
+		ChatWindow window = new ChatWindow();
+		window.setBounds((int)((4f/3)*screenSize.getHeight()), 0, (int)screenSize.getWidth()-(int)((4f/3)*screenSize.getHeight()), (int)((4f/3)*screenSize.getHeight()));
+		window.setDefaultCloseOperation(window.EXIT_ON_CLOSE);
+		//Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		window2.setSize((int)((4f/3)*screenSize.getHeight()), (int)screenSize.getHeight());
+		//window.setLocation(0, 330);
+		window.setVisible(true);
 	}
 
 }
