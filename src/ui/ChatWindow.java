@@ -365,15 +365,15 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 
 	private int getWordCount(String s) {
 		if (s.length() > 0) {
-<<<<<<< HEAD
+
 			for (int i = 0; i < s.length()-1; i++) {
 				while (i+1 < s.length() && s.charAt(i) == '_' && s.charAt(i+1) == '_') {
 					s = s.substring(0, i) + s.substring(i+1);
-=======
+				}
+			}
 			for (int i = 0; i < s.length() - 1; i++) {
 				while (s.charAt(i) == '_' && s.charAt(i + 1) == '_') {
 					s = s.substring(0, i) + s.substring(i + 1);
->>>>>>> b286d6eba87c33a85e73a03bfc8d5e91c3eb7545
 				}
 			}
 			while (s.charAt(s.length()-1) == '_') {
