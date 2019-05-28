@@ -11,6 +11,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.JOptionPane;
 
+import ui.GIFDisplay;
 import web.MindReader;
 
 /**
@@ -20,7 +21,7 @@ import web.MindReader;
 
 public class Recorder {
 	TargetDataLine line;
-	AudioFormat a = new AudioFormat(16000, 8, 2, true, true);
+	AudioFormat a = new AudioFormat(16000, 16, 1, true, false);
 
 	public String start() {
 		String filename = null;
@@ -37,16 +38,21 @@ public class Recorder {
 			e.printStackTrace();
 			filename = null;
 		}
+		if (Math.random() > 0.5)
+			GIFDisplay.shelbyIndex = 0;
+		else
+			GIFDisplay.shelbyIndex = 4;
 		return filename;
 	}
 
 	public Recorder() {
+		GIFDisplay.shelbyIndex = 5;
 		Thread stopper = new Thread(new Runnable() {
 			public void run() {
 				try {
 					// Thread.sleep(Integer.parseInt(JOptionPane
 					// .showInputDialog("How long do you want to record (seconds)")) * 1000);
-					Thread.sleep(2000);
+					Thread.sleep(3500);
 				} catch (InterruptedException ex) {
 					ex.printStackTrace();
 				}
