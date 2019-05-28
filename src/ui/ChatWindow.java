@@ -64,8 +64,33 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	 * If the user presses "enter", the input will get parsed
 	 */
 	public void keyPressed(KeyEvent e) {
+		
 		if (e.getKeyCode() == 10) { // Checks for 'return' key pressed
+			
 			String input = userText.getText().replaceAll(" ", "_");
+			if (input.equalsIgnoreCase("/record") || input.equals("/rec")) {
+				
+				input = ear.getTextFromWav(ear.listen());
+				userText.setText(input);
+				for (int i = 0; i < input.length(); i++) {
+					if (input.charAt(i) == ' ') {
+						input = input.substring(0, i) + "_" + input.substring(i+1);
+					}
+				}
+				if (input.indexOf("delete") != -1) {
+					try {
+						int t1 = MindReader.folderClean("tenorJSON", 0);
+						int t2 = MindReader.folderClean("images", 0);
+						changeButtons();
+						pane = new JOptionPane("Successfullly deleted " + t1 + " JSON files and " + t2 + " GIF files");
+						d = pane.createDialog(null, "Success");
+						d.setLocation((int) (Math.random() * 1200), (int) (Math.random() * 600));
+						d.setVisible(true);
+					} catch (Exception f) {
+						System.out.println(f);
+					}
+				}
+			}
 			if (input.equalsIgnoreCase("osman"))
 				input = "thumb";
 			if (input.equalsIgnoreCase("carl"))
@@ -132,9 +157,8 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 	}
 
 	private void checkCommands(String input) {
-		if (input.equalsIgnoreCase("record")) {
-			userText.setText(ear.getTextFromWav(ear.listen()));
-		} else if (input.equalsIgnoreCase("get_url")) {
+		
+		if (input.equalsIgnoreCase("get_url")) {
 
 			StringSelection stringSelection = new StringSelection(GIFDisplay.getURL());
 			Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -341,10 +365,19 @@ public class ChatWindow extends JFrame implements ActionListener, KeyListener {
 
 	private int getWordCount(String s) {
 		if (s.length() > 0) {
+<<<<<<< HEAD
+			for (int i = 0; i < s.length()-1; i++) {
+				while (i+1 < s.length() && s.charAt(i) == '_' && s.charAt(i+1) == '_') {
+					s = s.substring(0, i) + s.substring(i+1);
+=======
 			for (int i = 0; i < s.length() - 1; i++) {
 				while (s.charAt(i) == '_' && s.charAt(i + 1) == '_') {
 					s = s.substring(0, i) + s.substring(i + 1);
+>>>>>>> b286d6eba87c33a85e73a03bfc8d5e91c3eb7545
 				}
+			}
+			while (s.charAt(s.length()-1) == '_') {
+				s = s.substring(0, s.length()-1);
 			}
 			int result = 1;
 			for (int i = 0; i < s.length(); i++) {
