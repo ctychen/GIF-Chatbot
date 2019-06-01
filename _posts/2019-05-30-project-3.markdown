@@ -4,8 +4,8 @@ subtitle: ...hardware version
 layout: default
 modal-id: 3
 date: 2019-5-30
-img: final.PNG
-thumbnail: final.PNG
+img: finished.PNG
+thumbnail: finished.PNG
 alt: image-alt
 project-date: May 2019
 client: 
