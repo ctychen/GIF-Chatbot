@@ -504,6 +504,14 @@
 .fa-eye:before {
   content: "\f06e";
 }
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .fa-eye-slash:before {
   content: "\f070";
 }

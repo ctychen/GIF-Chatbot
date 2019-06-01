@@ -2,7 +2,7 @@
 title: Fancy Commands!
 subtitle: Customize your experience
 layout: default
-modal-id: 4
+modal-id: 5
 date: 2019-05-27
 img: command2.PNG
 thumbnail: command2.PNG
