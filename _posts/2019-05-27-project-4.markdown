@@ -4,8 +4,8 @@ subtitle: Customize your experience
 layout: default
 modal-id: 5
 date: 2019-05-27
-img: command2.PNG
-thumbnail: command2.PNG
+img: command3.PNG
+thumbnail: command3.PNG
 alt: image-alt
 project-date: May 2019
 client: 
