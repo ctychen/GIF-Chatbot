@@ -1,11 +1,11 @@
----
+	---
 title: Finished Product
 subtitle: ...hardware version
 layout: default
 modal-id: 3
 date: 2019-5-30
-img: finished.PNG
-thumbnail: finished.PNG
+img: finished1.PNG
+thumbnail: finished1.PNG
 alt: image-alt
 project-date: May 2019
 client: 
