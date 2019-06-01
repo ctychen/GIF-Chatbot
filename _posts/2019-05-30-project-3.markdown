@@ -1,4 +1,4 @@
-	---
+---
 title: Finished Product
 subtitle: ...hardware version
 layout: default
