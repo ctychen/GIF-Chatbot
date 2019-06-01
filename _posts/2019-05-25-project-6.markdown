@@ -1,0 +1,14 @@
+---
+title: Sentiment Analysis
+subtitle: Perfectly balances the user
+layout: default
+modal-id: 6
+date: 2019-05-25
+img: sentiment.PNG
+thumbnail: sentiment.PNG
+alt: image-alt
+project-date: May 2019
+client: 
+category: 
+description: 
+---

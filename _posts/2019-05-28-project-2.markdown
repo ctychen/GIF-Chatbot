@@ -1,0 +1,14 @@
+---
+title: Coding
+subtitle: Class design and planning 
+layout: default
+modal-id: 2
+date: 2018-05-28
+img: uml.PNG
+thumbnail: uml.PNG
+alt: image-alt
+project-date: May 2019
+client: 
+category: 
+description: This project was completely built in Java. The Tenor GIF API, Stanford NLP library, and CMU's Sphinx library were used.
+---

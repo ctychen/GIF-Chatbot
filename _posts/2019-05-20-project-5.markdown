@@ -1,0 +1,14 @@
+---
+title: GIFs!
+subtitle: Freshly served using the Tenor API
+layout: default
+modal-id: 5
+date: 2019-5-20
+img: gif.PNG
+thumbnail: gif.PNG
+alt: image-alt
+project-date: May 2019
+client: 
+category: 
+description:
+---

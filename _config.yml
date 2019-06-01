@@ -1,0 +1,53 @@
+url: https://the-null-terminator.github.io
+baseurl: /GIF-Chatbot/
+
+# Site settings
+title: GIF Chatbot
+email: emailyeeter@gmail.com
+description: "Claire, Carl, and Zach's APCS final project"
+
+
+# Team names, titles and social links
+people:
+- name: Claire
+  pic: cchen
+  position: Code, Design
+  social:
+    - title: github
+      url: https://github.com/the-null-terminator
+
+- name: Carl
+  pic: clerdorf
+  position: Code, Hardware
+  social:
+    - title: github
+      url: https://github.com/YeeticusFinch
+
+- name: Zach
+  pic: zwang
+  position: Code
+  social:
+    - title: github
+      url: https://github.com/zwang695
+
+# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
+social:
+  - title: twitter
+    url: http://twitter.com/jekyllrb
+  - title: facebook
+    url:
+  - title: stack-overflow
+    url: http://stackoverflow.com/questions/tagged/jekyll
+  - title: bitbucket 
+    url: http://bitbucket.org/jekyll
+  - title: github
+    url: http://github.com/jekyll
+
+# Postal address (add as many lines as necessary)
+address:
+  - line: Homestead High School
+  - line: 
+
+# Build settings
+markdown: kramdown
+permalink: pretty

@@ -1,0 +1,15 @@
+---
+title: Fancy Designs
+subtitle: Original Ideas and Concepts
+layout: default
+modal-id: 1
+date: 2019-05-10
+img: design.PNG
+thumbnail: design.PNG
+alt: image-alt
+project-date: May 28
+client: 
+category: 
+description: The final product ended up looking quite different, but here was a pretty interesting start.
+
+---

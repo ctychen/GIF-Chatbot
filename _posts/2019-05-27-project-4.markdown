@@ -1,0 +1,14 @@
+---
+title: Fancy Commands!
+subtitle: Customize your experience
+layout: default
+modal-id: 4
+date: 2019-05-27
+img: command.PNG
+thumbnail: command.PNG
+alt: image-alt
+project-date: May 2019
+client: 
+category: 
+description: 
+---
