@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 
+import Yeet.Yoink;
 import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
@@ -25,6 +26,10 @@ import net.dv8tion.jda.core.entities.impl.GuildImpl;
 
 public class MessageListener extends ListenerAdapter {
 
+	public static String memeURL = null;
+	public static String memeWebURL = null;
+	Yoink yoink = new Yoink();
+	
 	public static void main(String[] args) throws LoginException {
 		JDABuilder builder = new JDABuilder(AccountType.BOT);
 		String token = "NTkxMTgzMTkwNzk4ODkzMDY2.XQtF0Q._dg7BQ4V51fjsl4g6Arv-uIQwPY";
@@ -38,6 +43,7 @@ public class MessageListener extends ListenerAdapter {
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
 
+		
 
 		if (event.isFromType(ChannelType.PRIVATE)) {
 			System.out.printf("[PM] %s: %s\n", event.getAuthor().getName(), event.getMessage().getContentDisplay());
@@ -48,7 +54,10 @@ public class MessageListener extends ListenerAdapter {
 		if (!event.getAuthor().isBot()) {
 			// System.out.println("User="+event.getMember().toString());
 			String fancy = event.getMessage().getContentRaw();
-
+			if (fancy.charAt(0) == '>') {
+				event.getChannel().sendMessage(yoink.parse(fancy.substring(1).trim())).queue();
+				event.getChannel().sendMessage(memeWebURL).queue();
+			}
 			if (fancy.equalsIgnoreCase("yeet")) {
 				event.getChannel().sendMessage("YOINK!").queue();
 			} else if (fancy.equalsIgnoreCase("yoink")) {
@@ -84,7 +93,7 @@ public class MessageListener extends ListenerAdapter {
 				event.getChannel().sendMessage("Ha, get roasted").queue();
 			} else if (fancy.equalsIgnoreCase("fancy")) {
 				event.getChannel().sendMessage("Very fancy indeed").queue();
-			} else if (contains(fancy, "fancy") || contains(fancy, "bot")) {
+			} else if (contains(fancy, "gif") || contains(fancy, "bot")) {
 				switch ((int) (Math.random() * 4)) {
 				case 0:
 					event.getChannel().sendMessage("I hear you talking about me behind my back!").queue();

@@ -153,7 +153,7 @@ public class Tenor {
 	 * 
 	 */
 	public String search(String query) { // anon_id may be used for rating
-
+		
 		return fetch(BASE_URL + "search?q=" + query + "&key=" + APIKey + "&limit=" + resultLimit + "&contentfilter="
 				+ filter, 600); // URL should be
 								// https://api.tenor.com/v1/search?q=fancy&key=H9U6TWFQY1LM&limit=8
